@@ -6,14 +6,13 @@
 [![Issues](https://img.shields.io/github/issues/mwat56/whitespace.svg)](https://github.com/mwat56/whitespace/issues?q=is%3Aopen+is%3Aissue)
 [![Size](https://img.shields.io/github/repo-size/mwat56/whitespace.svg)](https://github.com/mwat56/whitespace/)
 [![Tag](https://img.shields.io/github/tag/mwat56/whitespace.svg)](https://github.com/mwat56/whitespace/tags)
-[![View examples](https://img.shields.io/badge/learn%20by-examples-0077b3.svg)](https://github.com/mwat56/whitespace/blob/master/_demo/demo.go)
 [![License](https://img.shields.io/github/mwat56/whitespace.svg)](https://github.com/mwat56/whitespace/blob/master/LICENSE)
 
 ----
 
 ## Purpose
 
-Whitespace (`TABulators`, `NewLines`, and `SPaces`) are characters in e.g. HTML pages which don't have syntactic significance.
+Whitespace (`TABulators`, `NewLines`, and `SPaces`) are characters in e.g. HTML pages which don't have syntactic significance but are just supposed to ease the reading by humans.
 Whether you put one space between `</p>` and the following `<p>` doesn't make a difference as far as parsing and rendering the HTML page is concerned – it just increases the filesize and therefore the amount of bandwidth needed, the time used for transfer and interpretation, the amount of memory used in both the sending server and the receiving user/browser.
 In the end one could say: the more whitespace there is in your HTML pages the more expensive it is for all parties involved.
 
@@ -24,7 +23,7 @@ So I extracted that code and refactored it to become the simple middleware plugi
 
 You can use `Go` to install this package for you:
 
-    go get -u github.com/mwat56/whitespace
+	go get -u github.com/mwat56/whitespace
 
 ## Usage
 
@@ -37,7 +36,7 @@ In both cases you have to use this library by
 
 	import "github.com/mwat56/whitespace"
 
-Tu use it as middleware for your webserver you call
+To use it as middleware for your web-server you call
 
 	whitespace.Wrap(aHandler http.Handler) http.Handler
 
