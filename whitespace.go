@@ -34,10 +34,15 @@ type (
 //
 //	`aData` is the data (usually text) to send to the remote client.
 func (tw *tTrimWriter) Write(aData []byte) (int, error) {
+	if 0 == len(aData) {
+		return 0, nil
+	}
+
 	if txt := Remove(aData); 0 < len(txt) {
 		// replace the standard text with our trimmed page:
 		aData = txt
 	}
+
 	return tw.ResponseWriter.Write(aData)
 } // Write()
 
