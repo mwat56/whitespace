@@ -20,6 +20,16 @@ import (
 	"regexp"
 )
 
+// UseRemoveWhitespace (default: `true`) determines whether the removal
+// of whitespace is actually run.
+// If set to `false` the `Remove(…)` functions becomes basically a NoOp.
+//
+// This flag allows you to include the `Wrap()` and/or `Remove()` functions
+// in your code but change your program's actual behaviour according to some
+// configurations settting or commandline option: You'd just change this
+// flag accordingly at runtime without changing your sourcecode at all.
+var UseRemoveWhitespace = true
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 type (
@@ -38,9 +48,11 @@ func (tw *tTrimWriter) Write(aData []byte) (int, error) {
 		return 0, nil
 	}
 
-	if txt := Remove(aData); 0 < len(txt) {
-		// replace the standard text with our trimmed page:
-		aData = txt
+	if UseRemoveWhitespace {
+		if txt := Remove(aData); 0 < len(txt) {
+			// replace the standard text with our trimmed page:
+			aData = txt
+		}
 	}
 
 	return tw.ResponseWriter.Write(aData)
@@ -101,7 +113,9 @@ var (
 //
 //	`aPage` The web page's HTML markup to process.
 func Remove(aPage []byte) []byte {
-	var repl, search string
+	if !UseRemoveWhitespace {
+		return aPage
+	}
 
 	// (0) Check whether there are PREformatted parts:
 	preMatches := wsPreRE.FindAll(aPage, -1)
@@ -116,10 +130,10 @@ func Remove(aPage []byte) []byte {
 	// (1) Make sure PREformatted parts remain as-is.
 	// Replace the PRE parts with a dummy text:
 	for lLen, cnt := len(preMatches), 0; cnt < lLen; cnt++ {
-		search = fmt.Sprintf(`\s*%s\s*`,
+		search := fmt.Sprintf(`\s*%s\s*`,
 			regexp.QuoteMeta(string(preMatches[cnt])))
 		if re, err := regexp.Compile(search); nil == err {
-			repl = fmt.Sprintf(`</-%d-%d-%d-%d-/>`, cnt, cnt, cnt, cnt)
+			repl := fmt.Sprintf(`</-%d-%d-%d-%d-/>`, cnt, cnt, cnt, cnt)
 			aPage = re.ReplaceAllLiteral(aPage, []byte(repl))
 		}
 	}
@@ -131,7 +145,7 @@ func Remove(aPage []byte) []byte {
 
 	// (3) Replace the PRE dummies with the real markup:
 	for lLen, cnt := len(preMatches), 0; cnt < lLen; cnt++ {
-		search = fmt.Sprintf(`\s*</-%d-%d-%d-%d-/>\s*`, cnt, cnt, cnt, cnt)
+		search := fmt.Sprintf(`\s*</-%d-%d-%d-%d-/>\s*`, cnt, cnt, cnt, cnt)
 		if re, err := regexp.Compile(search); nil == err {
 			aPage = re.ReplaceAllLiteral(aPage,
 				bytes.TrimSpace(preMatches[cnt]))

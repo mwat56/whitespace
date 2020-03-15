@@ -49,6 +49,12 @@ If instead you want to use the library manually you can call
 
 where `aPage` is the HTML page you prepared and the function's return value is that very page with all superfluous whitespace removed.
 
+### Runtime
+
+You can de-/activate the removal behaviour at runtime by setting the boolean `UseRemoveWhitespace` flag.
+If it is `true` (i.e. the default) both the `Remove()` and `Wrap()` functions work as expected (see above).
+However, if you set that flag to `false` no whitespace removal takes place and the HTML pages produced by your server will be send to the remote user as they were generated.
+
 ## Libraries
 
 No external libraries were used building `whitespace`.
