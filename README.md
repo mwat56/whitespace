@@ -8,6 +8,14 @@
 [![Tag](https://img.shields.io/github/tag/mwat56/whitespace.svg)](https://github.com/mwat56/whitespace/tags)
 [![License](https://img.shields.io/github/mwat56/whitespace.svg)](https://github.com/mwat56/whitespace/blob/master/LICENSE)
 
+- [Whitespace](#whitespace)
+	- [Purpose](#purpose)
+	- [Installation](#installation)
+	- [Usage](#usage)
+		- [Runtime](#runtime)
+	- [Libraries](#libraries)
+	- [Licence](#licence)
+
 ----
 
 ## Purpose
