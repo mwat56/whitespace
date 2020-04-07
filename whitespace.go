@@ -20,15 +20,18 @@ import (
 	"regexp"
 )
 
-// UseRemoveWhitespace (default: `true`) determines whether the removal
-// of whitespace is actually run.
-// If set to `false` the `Remove(…)` functions becomes basically a NoOp.
-//
-// This flag allows you to include the `Wrap()` and/or `Remove()` functions
-// in your code but change your program's actual behaviour according to some
-// configurations settting or commandline option: You'd just change this
-// flag accordingly at runtime without changing your sourcecode at all.
-var UseRemoveWhitespace = true
+var (
+	// UseRemoveWhitespace (default: `true`) determines whether the removal
+	// of whitespace is actually run.
+	// If set to `false` the `Remove(…)` function becomes basically a NoOp.
+	//
+	// This flag allows you to include the `Wrap()` and/or `Remove()`
+	// functions in your code but change your program's actual behaviour
+	// according to some configuration settting or commandline option:
+	// You'd just change this flag accordingly at runtime without changing
+	// your sourcecode at all.
+	UseRemoveWhitespace = true
+)
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
