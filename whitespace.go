@@ -26,7 +26,7 @@ var (
 	// If set to `false` the `Remove(…)` function becomes basically a NoOp.
 	//
 	// This flag allows you to include the `Wrap()` and/or `Remove()`
-	// functions in your code but change your program's actual behaviour
+	// functions in your code and change your program's actual behaviour
 	// according to some configuration settting or commandline option:
 	// You'd just change this flag accordingly at runtime without changing
 	// your sourcecode at all.
@@ -47,11 +47,7 @@ type (
 //
 //	`aData` is the data (usually text) to send to the remote client.
 func (tw *tTrimWriter) Write(aData []byte) (int, error) {
-	if 0 == len(aData) {
-		return 0, nil
-	}
-
-	if UseRemoveWhitespace {
+	if UseRemoveWhitespace && (0 < len(aData)) {
 		if txt := Remove(aData); 0 < len(txt) {
 			// replace the standard text with our trimmed page:
 			aData = txt
