@@ -6,7 +6,7 @@
 [![Issues](https://img.shields.io/github/issues/mwat56/whitespace.svg)](https://github.com/mwat56/whitespace/issues?q=is%3Aopen+is%3Aissue)
 [![Size](https://img.shields.io/github/repo-size/mwat56/whitespace.svg)](https://github.com/mwat56/whitespace/)
 [![Tag](https://img.shields.io/github/tag/mwat56/whitespace.svg)](https://github.com/mwat56/whitespace/tags)
-[![License](https://img.shields.io/github/mwat56/whitespace.svg)](https://github.com/mwat56/whitespace/blob/master/LICENSE)
+[![License](https://img.shields.io/github/mwat56/whitespace.svg)](https://github.com/mwat56/whitespace/blob/main/LICENSE)
 
 - [Whitespace](#whitespace)
 	- [Purpose](#purpose)
@@ -24,7 +24,7 @@ Whitespace (`TABulators`, `NewLines`, and `SPaces`) are characters in e.g. HTML 
 Whether you put one space between `</p>` and the following `<p>` doesn't make a difference as far as parsing and rendering the HTML page is concerned – it just increases the filesize and therefore the amount of bandwidth needed, the time used for transfer and interpretation, the amount of memory used in both the sending server and the receiving user/browser.
 In the end one could say: the more whitespace there is in your HTML pages the more expensive it is for all parties involved.
 
-When writing [Nele](https://github.com/mwat56/Nele/blob/master/README.md) and [Kaliber](https://github.com/mwat56/kaliber/blob/master/README.md) (both of which are essentially web-servers) I realised that I basically implemented the same code for removing superfluous whitespace before delivering the HTML pages to the remote user.
+When writing [Nele](https://github.com/mwat56/Nele/blob/main/README.md) and [Kaliber](https://github.com/mwat56/kaliber/blob/main/README.md) (both of which are essentially web-servers) I realised that I basically implemented the same code for removing superfluous whitespace before delivering the HTML pages to the remote user.
 So I extracted that code and refactored it to become the simple middleware plugin you can see here.
 
 ## Installation
