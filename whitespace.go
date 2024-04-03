@@ -1,5 +1,5 @@
 /*
-   Copyright © 2019, 2022 M.Watermann, 10247 Berlin, Germany
+   Copyright © 2019, 2024  M.Watermann, 10247 Berlin, Germany
                   All rights reserved
               EMail : <support@mwat.de>
 */
@@ -21,15 +21,15 @@ import (
 )
 
 var (
-	// UseRemoveWhitespace (default: `true`) determines whether the removal
-	// of whitespace is actually run.
+	// `UseRemoveWhitespace` (default: `true`) determines whether the
+	// removal of whitespace is actually run.
 	// If set to `false` the `Remove(…)` function becomes basically a NoOp.
 	//
 	// This flag allows you to include the `Wrap()` and/or `Remove()`
 	// functions in your code and change your program's actual behaviour
-	// according to some configuration settting or commandline option:
+	// according to some configuration setting or commandline option:
 	// You'd just change this flag accordingly at runtime without changing
-	// your sourcecode at all.
+	// your source code at all.
 	UseRemoveWhitespace = true
 )
 
@@ -37,13 +37,13 @@ var (
 
 type (
 	// `tTrimWriter` embeds a `ResponseWriter` and includes
-	// whitespace removal.
+	// whitespace removal by overwriting its `Write()` method.
 	tTrimWriter struct {
 		http.ResponseWriter // used to construct a HTTP response.
 	}
 )
 
-// Write writes the data to the connection as part of an HTTP reply.
+// `Write` writes the data to the connection as part of an HTTP reply.
 //
 //	`aData` is the data (usually text) to send to the remote client.
 func (tw *tTrimWriter) Write(aData []byte) (int, error) {
@@ -59,8 +59,6 @@ func (tw *tTrimWriter) Write(aData []byte) (int, error) {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-// Internal list of regular expressions used by
-// the `RemoveWhiteSpace()` function.
 type (
 	tReItem struct {
 		regEx   *regexp.Regexp
@@ -68,6 +66,8 @@ type (
 	}
 )
 
+// Internal list of regular expressions used by
+// the `RemoveWhiteSpace()` function.
 var (
 	wsREs = []tReItem{
 		// comments:
@@ -102,7 +102,7 @@ var (
 	wsPreRE = regexp.MustCompile(`(?si)\s*<pre[^>]*>.*?</pre>\s*`)
 )
 
-// Remove returns `aPage` with HTML comments and
+// `Remove` returns `aPage` with HTML comments and
 // unnecessary whitespace removed.
 //
 // This function removes all unneeded/redundant whitespace
@@ -154,7 +154,7 @@ func Remove(aPage []byte) []byte {
 	return aPage
 } // Remove()
 
-// Wrap returns a handler function that removes superfluous whitespace
+// `Wrap` returns a handler function that removes superfluous whitespace
 // wrapping the given `aHandler` and calling it internally.
 //
 //	`aHandler` responds to the actual HTTP request.
