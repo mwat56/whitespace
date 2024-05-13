@@ -23,7 +23,7 @@ import (
 var (
 	// `UseRemoveWhitespace` (default: `true`) determines whether the
 	// removal of whitespace is actually run.
-	// If set to `false` the `Remove(…)` function becomes basically a NoOp.
+	// If set to `false` the `Remove()` function becomes basically a NoOp.
 	//
 	// This flag allows you to include the `Wrap()` and/or `Remove()`
 	// functions in your code and change your program's actual behaviour
@@ -157,14 +157,14 @@ func Remove(aPage []byte) []byte {
 // `Wrap` returns a handler function that removes superfluous whitespace
 // wrapping the given `aHandler` and calling it internally.
 //
-//	`aHandler` responds to the actual HTTP request.
-func Wrap(aHandler http.Handler) http.Handler {
+//	`aNext` responds to the actual HTTP request.
+func Wrap(aNext http.Handler) http.Handler {
 	return http.HandlerFunc(
 		func(aWriter http.ResponseWriter, aRequest *http.Request) {
 			tw := &tTrimWriter{
 				aWriter,
 			}
-			aHandler.ServeHTTP(tw, aRequest)
+			aNext.ServeHTTP(tw, aRequest)
 		})
 } // Wrap()
 
