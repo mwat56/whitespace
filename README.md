@@ -37,10 +37,10 @@ You can use `Go` to install this package for you:
 
 There are two ways to use this library:
 
-1. as a middleware plugin which then will be used automatically;
-2. by calling the `Remove(…)` function from your code whenever it suits you.
+1. As a middleware plugin which then will be used automatically.
+2. By calling the `Remove()` function from your code whenever it suits you.
 
-In both cases you have to use this library by
+In both cases you can use this library by
 
 	import "github.com/mwat56/whitespace"
 
@@ -80,3 +80,4 @@ No external libraries were used building `whitespace`.
 > You should have received a copy of the GNU General Public License along with this program. If not, see the [GNU General Public License](http://www.gnu.org/licenses/gpl.html) for details.
 
 ----
+[![GFDL](https://www.gnu.org/graphics/gfdl-logo-tiny.png)](http://www.gnu.org/copyleft/fdl.html)

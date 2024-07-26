@@ -1,12 +1,11 @@
 /*
-   Copyright © 2019, 2024  M.Watermann, 10247 Berlin, Germany
-                  All rights reserved
-              EMail : <support@mwat.de>
+Copyright © 2019, 2024  M.Watermann, 10247 Berlin, Germany
+
+			All rights reserved
+		EMail : <support@mwat.de>
 */
 
 package whitespace
-
-//lint:file-ignore ST1017 - I prefer Yoda conditions
 
 /*
  * This files provides a function to remove redundant whitespace
@@ -19,6 +18,8 @@ import (
 	"net/http"
 	"regexp"
 )
+
+//lint:file-ignore ST1017 - I prefer Yoda conditions
 
 var (
 	// `UseRemoveWhitespace` (default: `true`) determines whether the
@@ -45,11 +46,16 @@ type (
 
 // `Write` writes the data to the connection as part of an HTTP reply.
 //
-//	`aData` is the data (usually text) to send to the remote client.
+// Parameters:
+//   - `aData`: The data (usually text) to send to the remote client.
+//
+// Returns:
+//   - `int`: Number of bytes written.
+//   - `error`: Possible processing error.
 func (tw *tTrimWriter) Write(aData []byte) (int, error) {
 	if UseRemoveWhitespace && (0 < len(aData)) {
 		if txt := Remove(aData); 0 < len(txt) {
-			// replace the standard text with our trimmed page:
+			// replace the given text with our trimmed page:
 			aData = txt
 		}
 	}
@@ -72,28 +78,38 @@ var (
 	wsREs = []tReItem{
 		// comments:
 		{regexp.MustCompile(`(?s)<!--.*?-->`), ``},
+
 		// HTML and HEAD elements:
 		{regexp.MustCompile(`(?si)\s*(</?(body|\!DOCTYPE|head|html|link|meta|script|style|title)[^>]*>)\s*`), `$1`},
+
 		// block elements:
 		{regexp.MustCompile(`(?si)\s+(</?(article|blockquote|div|footer|h[1-6]|header|nav|p|section)[^>]*>)`), `$1`},
 		{regexp.MustCompile(`(?si)(</?(article|blockquote|div|footer|h[1-6]|header|nav|p|section)[^>]*>)\s+`), `$1`},
+
 		// lists:
 		{regexp.MustCompile(`(?si)\s+(</?([dou]l|li|d[dt])[^>]*>)`), `$1`},
 		{regexp.MustCompile(`(?si)(</?([dou]l|li|d[dt])[^>]*>)\s+`), `$1`},
+
 		// table elements:
 		{regexp.MustCompile(`(?si)\s+(</?(col|t(able|body|foot|head|[dhr]))[^>]*>)`), `$1`},
 		{regexp.MustCompile(`(?si)(</?(col|t(able|body|foot|head|[dhr]))[^>]*>)\s+`), `$1`},
+
 		// form elements:
 		{regexp.MustCompile(`(?si)\s+(</?(form|fieldset|legend|opt(group|ion))[^>]*>)`), `$1`},
 		{regexp.MustCompile(`(?si)(</?(form|fieldset|legend|opt(group|ion))[^>]*>)\s+`), `$1`},
+
 		// BR / HR:
 		{regexp.MustCompile(`(?i)\s*(<[bh]r[^>]*>)\s*`), `$1`},
+
 		// whitespace after opened anchor:
 		{regexp.MustCompile(`(?si)(<a\s+[^>]*>)\s+`), `$1`},
+
 		// preserve empty table cells:
 		{regexp.MustCompile(`(?i)(<td(\s+[^>]*)?>)\s+(</td>)`), `$1&#160;$3`},
+
 		// remove empty paragraphs:
 		{regexp.MustCompile(`(?i)<(p)(\s+[^>]*)?>\s*</$1>`), ``},
+
 		// whitespace before closing GT:
 		{regexp.MustCompile(`\s+>`), `>`},
 	}
@@ -105,12 +121,16 @@ var (
 // `Remove` returns `aPage` with HTML comments and
 // unnecessary whitespace removed.
 //
-// This function removes all unneeded/redundant whitespace
-// and HTML comments from the given `aPage`.
+// Depending of the global `UseRemoveWhitespace` flag this function removes
+// all unneeded/redundant whitespace and HTML comments from the given `aPage`.
 // This can reduce significantly the amount of data to send to the
 // remote user agent thus saving both bandwidth and transfer time.
 //
-//	`aPage` The web page's HTML markup to process.
+// Parameters:
+//   - `aPage`: The web page's HTML markup to process.
+//
+// Returns:
+//   - `[]byte`: The cleansed page.
 func Remove(aPage []byte) []byte {
 	if !UseRemoveWhitespace {
 		return aPage
@@ -154,10 +174,14 @@ func Remove(aPage []byte) []byte {
 	return aPage
 } // Remove()
 
-// `Wrap` returns a handler function that removes superfluous whitespace
+// `Wrap` returns a handler function that removes superfluous whitespace,
 // wrapping the given `aHandler` and calling it internally.
 //
-//	`aNext` responds to the actual HTTP request.
+// Parameters:
+//   - `aNext`: responds to the actual HTTP request.
+//
+// Returns:
+//   - `http.Handler`: The handler function to use by the application.
 func Wrap(aNext http.Handler) http.Handler {
 	return http.HandlerFunc(
 		func(aWriter http.ResponseWriter, aRequest *http.Request) {

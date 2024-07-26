@@ -1,17 +1,18 @@
 /*
-   Copyright © 2019, 2022 M.Watermann, 10247 Berlin, Germany
-                  All rights reserved
-              EMail : <support@mwat.de>
+Copyright © 2019, 2024  M.Watermann, 10247 Berlin, Germany
+
+			All rights reserved
+		EMail : <support@mwat.de>
 */
 
 package whitespace
-
-//lint:file-ignore ST1017 - I prefer Yoda conditions
 
 import (
 	"reflect"
 	"testing"
 )
+
+//lint:file-ignore ST1017 - I prefer Yoda conditions
 
 func TestRemove(t *testing.T) {
 	in1 := []byte(`<hr />
